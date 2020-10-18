@@ -2,6 +2,6 @@
 
 Dashboard for Jakbee Wiyasa, included cesium to display geographical information.
 
-## How to RUn
+## How to Run
 
-`npm start` hot loader included 🎉
+`npm start`, hot loader included 🎉
