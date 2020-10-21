@@ -15,6 +15,12 @@ export class Map extends Component {
     }
   }
 
+  componentDidMount() {
+    this.viewer.scene.camera.flyTo({
+      destination : Cesium.Rectangle.fromDegrees(95.3134, 5.5508, 95.3221, 5.5563),
+    });
+  }
+
   getLocationFromScreenXY = (x, y) => {
     const scene = this.viewer.scene
     if (!scene) {
@@ -80,6 +86,7 @@ export class Map extends Component {
   }
 
   render() {
+    // console.log(this.state)
     const {currentEntity, entities} = this.state
     const points = currentEntity.points || []
 
