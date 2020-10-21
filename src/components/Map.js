@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {Entity, PolygonGraphics, Viewer} from "resium";
 import {Cartesian2, Cartesian3, Color, Math} from "cesium";
-
+import CSVReader from "react-csv-reader";
+import {exportObjects} from "../util/csv";
 import swal from 'sweetalert';
 
 export class Map extends Component {
@@ -11,7 +12,26 @@ export class Map extends Component {
       currentEntity: {
         points: []
       },
-      entities: []
+      entities: [],
+      data: []
+    }
+  }
+
+  importData = (data, _) => {
+    console.log(data)
+
+    try {
+      const parsed = []
+      for (let row of data) {
+        if (row.values !== "") {
+          let parsedRow = JSON.parse(row.value)
+          parsed.push(parsedRow)
+        }
+      }
+
+      this.setState({data: parsed}, () => console.log(this.state.data))
+    } catch (e) {
+      console.log("error importing data", e.message)
     }
   }
 
@@ -47,8 +67,9 @@ export class Map extends Component {
       currentEntity: {
         ...this.state.currentEntity,
         points: points
-      }
-    })
+      },
+      data: [...this.state.data, {long, lat}],
+    }, () => console.log(this.state.data))
   }
 
   clearCurrentEntity = () => {
@@ -91,37 +112,49 @@ export class Map extends Component {
     const points = currentEntity.points || []
 
     return (
-      <Viewer full
-              ref={e => {
-                this.viewer = e ? e.cesiumElement : null;
-              }}
-              onClick={this.onMapClick}
-      >
-        <button style={{left: '250px', top: '95px', position: 'fixed'}}
-                onClick={() => this.saveSelection()}>
-          Save Polygon
-        </button>
-        {points.map((point, index) => {
-          return (
-            <Entity
-              key={index}
-              position={Cartesian3.fromDegrees(point[0], point[1])}
-              point={{pixelSize: 5}}
-            />
-          )
-        })}
-        {entities.map((entity, index) => {
-          return (
-            <Entity>
-              <PolygonGraphics
-                hierarchy={Cartesian3.fromDegreesArray(entity["points"])}
-                height={5}
-                material={entity["isDamaged"] ? Color.RED.withAlpha(0.5) : Color.GREEN.withAlpha(0.5)}
+      <div>
+        <div>
+          <CSVReader
+            parserOptions={{header: true}}
+            onFileLoaded={this.importData}
+          />
+        </div>
+        <div>
+          <button onClick={() => exportObjects(entities, "export.csv")}>Export data</button>
+        </div>
+        <Viewer full
+                style={{position: "relative"}}
+                ref={e => {
+                  this.viewer = e ? e.cesiumElement : null;
+                }}
+                onClick={this.onMapClick}
+        >
+          <button style={{left: '250px', top: '95px', position: 'fixed'}}
+                  onClick={() => this.saveSelection()}>
+            Save Polygon
+          </button>
+          {points.map((point, index) => {
+            return (
+              <Entity
+                key={index}
+                position={Cartesian3.fromDegrees(point[0], point[1])}
+                point={{pixelSize: 5}}
               />
-            </Entity>
-          )
-        })}
-      </Viewer>
+            )
+          })}
+          {entities.map((entity, index) => {
+            return (
+              <Entity>
+                <PolygonGraphics
+                  hierarchy={Cartesian3.fromDegreesArray(entity["points"])}
+                  height={5}
+                  material={entity["isDamaged"] ? Color.RED.withAlpha(0.5) : Color.GREEN.withAlpha(0.5)}
+                />
+              </Entity>
+            )
+          })}
+        </Viewer>
+      </div>
     )
   }
 }
