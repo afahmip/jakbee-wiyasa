@@ -58,7 +58,7 @@ export class Map extends Component {
     const answer = await swal("Is this building damageedsz?", {
       buttons: {
         yes: "Aww yiss!",
-        no: "Oh noez!"
+        cancel: "Oh noez!"
       }
     });
 
