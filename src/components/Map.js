@@ -1,8 +1,20 @@
 import React, {Component} from "react";
 import {Entity, PolygonGraphics, Viewer} from "resium";
-import {Cartesian3, Cartesian2, Math, Color} from "cesium";
+import {Cartesian2, Cartesian3, Color, Math} from "cesium";
+
+import swal from 'sweetalert';
 
 export class Map extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentEntity: {
+        points: []
+      },
+      entities: []
+    }
+  }
+
   getLocationFromScreenXY = (x, y) => {
     const scene = this.viewer.scene
     if (!scene) {
@@ -23,10 +35,54 @@ export class Map extends Component {
     const lat = Math.toDegrees(coords.latitude)
     const long = Math.toDegrees(coords.longitude)
 
-    console.log({lat, long})
+    const points = [...this.state.currentEntity.points, [long, lat]]
+    this.setState({
+      ...this.state,
+      currentEntity: {
+        ...this.state.currentEntity,
+        points: points
+      }
+    })
+  }
+
+  clearCurrentEntity = () => {
+    this.setState({
+      ...this.state,
+      currentEntity: {
+        points: []
+      }
+    })
+  }
+
+  isBuildingDamaged = async () => {
+    const answer = await swal("Is this building damageedsz?", {
+      buttons: {
+        yes: "Aww yiss!",
+        no: "Oh noez!"
+      }
+    });
+
+    return answer === "yes"
+  }
+
+  saveSelection = async () => {
+    const {currentEntity} = this.state
+    this.clearCurrentEntity()
+
+    currentEntity["isDamaged"] = await this.isBuildingDamaged()
+    currentEntity["points"] = currentEntity.points.reduce((total, curr) => {
+      return total.concat(curr);
+    })
+    this.setState({
+      ...this.state,
+      entities: [...this.state.entities, currentEntity]
+    })
   }
 
   render() {
+    const {currentEntity, entities} = this.state
+    const points = currentEntity.points || []
+
     return (
       <Viewer full
               ref={e => {
@@ -34,20 +90,30 @@ export class Map extends Component {
               }}
               onClick={this.onMapClick}
       >
-        <Entity>
-          <PolygonGraphics
-            hierarchy={Cartesian3.fromDegreesArray([
-              115.0664319,-8.127787,
-              115.0662681,-8.1275414,
-              115.0664451,-8.1274293,
-              115.0666148,-8.1276916
-            ])}
-            height={10}
-            material={Color.RED.withAlpha(0.5)}
-            outline={true}
-            outlineColor={Color.BLACK}
-          />
-        </Entity>
+        <button style={{left: '250px', top: '95px', position: 'fixed'}}
+                onClick={() => this.saveSelection()}>
+          Save Polygon
+        </button>
+        {points.map((point, index) => {
+          return (
+            <Entity
+              key={index}
+              position={Cartesian3.fromDegrees(point[0], point[1])}
+              point={{pixelSize: 5}}
+            />
+          )
+        })}
+        {entities.map((entity, index) => {
+          return (
+            <Entity>
+              <PolygonGraphics
+                hierarchy={Cartesian3.fromDegreesArray(entity["points"])}
+                height={5}
+                material={entity["isDamaged"] ? Color.RED.withAlpha(0.5) : Color.GREEN.withAlpha(0.5)}
+              />
+            </Entity>
+          )
+        })}
       </Viewer>
     )
   }

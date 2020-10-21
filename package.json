@@ -15,7 +15,8 @@
     "react-dom": "16.13.0",
     "react-hot-loader": "^4.13.0",
     "react-scripts": "3.4.3",
-    "resium": "^1.13.1"
+    "resium": "^1.13.1",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "craco start",
