@@ -1,0 +1,236 @@
+.card-worker {
+  &__body {
+    padding-top: 10px;
+  }
+
+  .worker-item {
+    display: flex;
+    padding: 15px 0;
+
+    >div:first-child {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 45px;
+      height: 45px;
+      border-radius: 6px;
+      margin-right: 15px;
+      background: #d0d3f1;
+      color: #303778;
+      font-weight: bold;
+    }
+
+    >div:nth-child(2) {
+      flex-basis: calc(60%);
+    }
+
+    >div:last-child {
+      flex-basis: calc(40% - 60px);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      i {
+        animation: beat .25s infinite alternate;
+        color: #454ba3;
+        font-size: 25px;
+        margin-left: 6px;
+      }
+    }
+
+    &__name {
+      margin-bottom: 3px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    &__activity {
+      margin-bottom: 0;
+      color: rgb(158, 158, 158);
+      span {
+        color: #303778;
+      }
+    }
+  }
+}
+
+@keyframes beat {
+  to {
+    transform: scale(1.2);
+  }
+}
+
+/* Active Hours */
+
+$hourwidth: 41px;
+$hourheight: 25px;
+$hourmargin: 3px;
+
+.workgraph {
+  display: flex;
+  margin-top: 6px;
+
+  &__hour {
+    background: #303778;
+    width: $hourwidth;
+    height: $hourheight;
+    border-radius: 4px;
+    margin: 6px 3px;
+
+    &-1 {opacity: 0.4;}
+    &-2 {opacity: 0.5;}
+    &-3 {opacity: 0.6;}
+    &-4 {opacity: 0.7;}
+    &-5 {opacity: 0.8;}
+    &-6 {opacity: 0.9;}
+    &-7 {opacity: 1;}
+  }
+}
+
+.hourrange {
+  margin-left: 7px;
+  span {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    height: calc(#{$hourheight} + 6px);
+  }
+}
+
+.days {
+  display: flex;
+  width: calc(6*#{$hourwidth} + 12*3px);
+  margin-bottom: 6px;
+  span {
+    display: block;
+    width: calc(#{$hourwidth} + 6px);
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+@media screen and (max-width: 1550px) {
+  $hourwidth: 30px;
+  $hourheight: 20px;
+  $hourmargin: 3px;
+
+  .workgraph__hour {
+    width: $hourwidth;
+    height: $hourheight;
+    margin: calc(2*#{$hourmargin}) $hourmargin;
+  }
+
+  .hourrange span {
+    height: calc(#{$hourheight} + 2*#{$hourmargin});
+  }
+
+  .days {
+    width: calc(6*#{$hourwidth} + 12*#{$hourmargin});
+    margin-bottom: calc(2*#{$hourmargin});
+    span {
+      width: calc(#{$hourwidth} + 2*#{$hourmargin});
+    }
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  $hourwidth: 45px;
+  $hourheight: 27px;
+  $hourmargin: 3px;
+
+  .workgraph__hour {
+    width: $hourwidth;
+    height: $hourheight;
+    margin: calc(2*#{$hourmargin}) $hourmargin;
+  }
+
+  .hourrange span {
+    height: calc(#{$hourheight} + 2*#{$hourmargin});
+  }
+
+  .days {
+    width: calc(6*#{$hourwidth} + 12*#{$hourmargin});
+    margin-bottom: calc(2*#{$hourmargin});
+    span {
+      width: calc(#{$hourwidth} + 2*#{$hourmargin});
+    }
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  $hourwidth: 48px;
+  $hourheight: 27px;
+  $hourmargin: 4px;
+
+  .workgraph__hour {
+    width: $hourwidth;
+    height: $hourheight;
+    border-radius: 6px;
+    margin: calc(2*#{$hourmargin}) $hourmargin;
+  }
+
+  .hourrange span {
+    height: calc(#{$hourheight} + 2*#{$hourmargin});
+  }
+
+  .days {
+    width: calc(6*#{$hourwidth} + 12*#{$hourmargin});
+    margin-bottom: calc(2*#{$hourmargin});
+    span {
+      width: calc(#{$hourwidth} + 2*#{$hourmargin});
+    }
+  }
+}
+
+/* Worker Count */
+
+.worker-count {
+  display: flex;
+  margin-bottom: 10px;
+
+  &__num {
+    flex-basis: 35%;
+    p {
+      margin-bottom: 0px;
+      font-weight: 700;
+      font-size: 60px;
+      color: #303778;
+    }
+  }
+
+  &__stats {
+    flex-basis: 65%;
+    padding-top: 15px;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+
+      >div {
+        width: 12px;
+        height: 12px;
+        background: #303778;
+        margin-right: 8px;
+      }
+      >span:last-child {
+        font-weight: bold;
+        color: #303778;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1535px) {
+  .worker-count {
+    display: block;
+    &__stats {
+      padding-top: 0;
+    }
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .worker-count__num p {
+    font-size: 70px;
+  }
+}

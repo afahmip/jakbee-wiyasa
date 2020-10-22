@@ -1,0 +1,135 @@
+@import './dashboard.scss';
+
+.dashboard-logo {
+  padding: 1.5rem 1rem 2.5rem 2rem;
+}
+
+.dashboard-logo img {
+  width: 70%;
+}
+
+body {
+  background-color: #F7F8FC !important;
+}
+
+/* Navbar */
+
+.main-sidebar, .main-navbar {
+  box-shadow: none !important;
+}
+
+.main-navbar {
+  background: #F7F8FC;
+  border-bottom: 1px solid rgb(228, 228, 228);
+}
+
+.navbar {
+  justify-content: flex-end;
+}
+
+.nav-wrapper {
+  padding: 0 1rem;
+}
+
+.main-sidebar .nav-item {
+  border-radius: 6px;
+  margin-bottom: 5px;
+  &:hover {
+    box-shadow: none !important;
+  }
+  i {
+    font-size: 1.5rem !important;
+  }
+  span {
+    margin-left: 8px;
+    font-size: 14px;
+  }
+}
+
+.nav-link {
+  box-shadow: none !important;
+  &:hover {
+    * { color: #303778 !important; }
+  }
+  &.active {
+    background: #303778 !important;
+    * { color: white !important; }
+  }
+}
+
+/* Card */
+
+.card, .card-small {
+  box-shadow:
+    0px 3px 5px -1px rgba(0, 0, 0, 0.03),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.03),
+    0px 1px 18px 0px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* React table */
+
+.ReactTable {
+  border: none;
+}
+
+.ReactTable .rt-thead.-header {
+  height: 2.5rem;
+  display: flex;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.075);
+}
+
+.ReactTable .-pagination {
+  border-top: none;
+  box-shadow: 0 0 15px 0 rgba(0,0,0,0.075);
+}
+
+.ReactTable .rt-thead .rt-th.-cursor-pointer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+.ReactTable .rt-tbody .rt-tr-group {
+  height: 50px;
+  transition-duration: 0.2s;
+  &:hover {
+    background: #F7F8FC;
+  }
+}
+
+.ReactTable .rt-td {
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.ReactTable .rt-tr {
+  cursor: pointer;
+}
+
+/* React Quill */
+
+.ql-container,
+.ql-editor {
+  min-height: 400px;
+}
+
+/* React Datepicker */
+
+.date-range .react-datepicker-wrapper {
+  display: flex;
+  flex: 1;
+  max-width: 160px;
+}
+
+.date-range .react-datepicker__input-container {
+  width: 100%;
+}
+
+@media (max-width: 575px) {
+  .date-range .react-datepicker-wrapper {
+    max-width: 100%;
+  }
+}

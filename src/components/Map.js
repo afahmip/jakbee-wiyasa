@@ -4,6 +4,7 @@ import {Rectangle, Cartesian2, Cartesian3, Color, Math, ArcGisMapServerImageryPr
 import CSVReader from "react-csv-reader";
 import {exportObjects} from "../util/csv";
 import swal from 'sweetalert';
+import {Button} from "shards-react";
 
 const esri = new ArcGisMapServerImageryProvider({
   url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
@@ -116,28 +117,27 @@ export class Map extends Component {
     const points = currentEntity.points || []
 
     return (
-      <div>
-        <div>
+      <div style={{position: "relative", width: "100%", minHeight: "750px"}}>
+        <div style={{padding: "16px", position: "absolute", top: 0, left: 0, zIndex: 99, display: "flex", flexDirection: "row"}}>
+          <Button onClick={() => exportObjects(entities, "export.csv")}>Export data</Button>
           <CSVReader
             parserOptions={{header: true}}
             onFileLoaded={this.importData}
           />
         </div>
-        <div>
-          <button onClick={() => exportObjects(entities, "export.csv")}>Export data</button>
+        <div style={{padding: "16px", position: "absolute", bottom: 0, right: 0, zIndex: 99, display: "flex", flexDirection: "row"}}>
+          <Button onClick={() => this.saveSelection()}>
+            Save Polygon
+          </Button>
         </div>
         <Viewer full
-                style={{position: "relative"}}
+                style={{position: "absolute"}}
                 ref={e => {
                   this.viewer = e ? e.cesiumElement : null;
                 }}
                 imageryProvider={esri}
                 onClick={this.onMapClick}
         >
-          <button style={{left: '250px', top: '95px', position: 'fixed'}}
-                  onClick={() => this.saveSelection()}>
-            Save Polygon
-          </button>
           {points.map((point, index) => {
             return (
               <Entity
