@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Entity, PolygonGraphics, Viewer} from "resium";
-import {Rectangle, Cartesian2, Cartesian3, Color, Math, ArcGisMapServerImageryProvider} from "cesium";
+import {Rectangle, Cartesian2, Cartesian3, Color, Math, ArcGisMapServerImageryProvider, IonResource, CesiumTerrainProvider} from "cesium";
 import CSVReader from "react-csv-reader";
 import {exportObjects} from "../util/csv";
 import swal from 'sweetalert';
@@ -9,6 +9,10 @@ import {Button} from "shards-react";
 const esri = new ArcGisMapServerImageryProvider({
   url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
 });
+
+const terrain = new CesiumTerrainProvider({
+    url: IonResource.fromAssetId(1),
+})
 
 export class Map extends Component {
   constructor(props) {
@@ -135,6 +139,7 @@ export class Map extends Component {
                 ref={e => {
                   this.viewer = e ? e.cesiumElement : null;
                 }}
+                terrainProvider={terrain}
                 imageryProvider={esri}
                 onClick={this.onMapClick}
         >
