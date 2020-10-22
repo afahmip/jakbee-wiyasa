@@ -30,15 +30,16 @@ export class Map extends Component {
     console.log(data)
 
     try {
-      const parsed = []
+      const entities = []
       for (let row of data) {
-        if (row.values !== "") {
-          let parsedRow = JSON.parse(row.value)
-          parsed.push(parsedRow)
+        const entity = {
+          ...row,
+          points: JSON.parse(row.points)
         }
+        entities.push(entity)
       }
 
-      this.setState({data: parsed}, () => console.log(this.state.data))
+      this.setState({entities: entities}, () => console.log(this.state))
     } catch (e) {
       console.log("error importing data", e.message)
     }
@@ -125,7 +126,7 @@ export class Map extends Component {
         <div style={{padding: "16px", position: "absolute", top: 0, left: 0, zIndex: 99, display: "flex", flexDirection: "row"}}>
           <Button onClick={() => exportObjects(entities, "export.csv")}>Export data</Button>
           <CSVReader
-            parserOptions={{header: true}}
+            parserOptions={{header: true, delimiter: ";"}}
             onFileLoaded={this.importData}
           />
         </div>
@@ -154,7 +155,7 @@ export class Map extends Component {
           })}
           {entities.map((entity, index) => {
             return (
-              <Entity>
+              <Entity key={"entity-" + index}>
                 <PolygonGraphics
                   hierarchy={Cartesian3.fromDegreesArray(entity["points"])}
                   height={5}
