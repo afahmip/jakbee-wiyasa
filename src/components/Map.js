@@ -28,9 +28,17 @@ export class Map extends Component {
     try {
       const entities = []
       for (let row of data) {
+        const realPoints = JSON.parse(row.points)
+        const points = realPoints.map((point, index) => {
+          if (index % 2 === 0) {
+            return point - 0.000007
+          } else {
+            return point + 0.000025
+          }
+        })
         const entity = {
           ...row,
-          points: JSON.parse(row.points),
+          points: points,
           isDamaged: row.isDamaged === "true"
         }
         entities.push(entity)
