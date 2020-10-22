@@ -10,10 +10,6 @@ const esri = new ArcGisMapServerImageryProvider({
   url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
 });
 
-const terrain = new CesiumTerrainProvider({
-    url: IonResource.fromAssetId(1),
-})
-
 export class Map extends Component {
   constructor(props) {
     super(props)
@@ -34,7 +30,8 @@ export class Map extends Component {
       for (let row of data) {
         const entity = {
           ...row,
-          points: JSON.parse(row.points)
+          points: JSON.parse(row.points),
+          isDamaged: row.isDamaged === "true"
         }
         entities.push(entity)
       }
@@ -140,7 +137,6 @@ export class Map extends Component {
                 ref={e => {
                   this.viewer = e ? e.cesiumElement : null;
                 }}
-                terrainProvider={terrain}
                 imageryProvider={esri}
                 onClick={this.onMapClick}
         >
@@ -154,12 +150,12 @@ export class Map extends Component {
             )
           })}
           {entities.map((entity, index) => {
+            const color = entity["isDamaged"] ? Color.RED.withAlpha(0.7) : Color.GREEN.withAlpha(0.7)
             return (
               <Entity key={"entity-" + index}>
                 <PolygonGraphics
                   hierarchy={Cartesian3.fromDegreesArray(entity["points"])}
-                  height={5}
-                  material={entity["isDamaged"] ? Color.RED.withAlpha(0.5) : Color.GREEN.withAlpha(0.5)}
+                  material={color}
                 />
               </Entity>
             )
