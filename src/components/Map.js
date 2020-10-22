@@ -1,9 +1,13 @@
 import React, {Component} from "react";
 import {Entity, PolygonGraphics, Viewer} from "resium";
-import {Rectangle, Cartesian2, Cartesian3, Color, Math} from "cesium";
+import {Rectangle, Cartesian2, Cartesian3, Color, Math, ArcGisMapServerImageryProvider} from "cesium";
 import CSVReader from "react-csv-reader";
 import {exportObjects} from "../util/csv";
 import swal from 'sweetalert';
+
+const esri = new ArcGisMapServerImageryProvider({
+  url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+});
 
 export class Map extends Component {
   constructor(props) {
@@ -127,6 +131,7 @@ export class Map extends Component {
                 ref={e => {
                   this.viewer = e ? e.cesiumElement : null;
                 }}
+                imageryProvider={esri}
                 onClick={this.onMapClick}
         >
           <button style={{left: '250px', top: '95px', position: 'fixed'}}
