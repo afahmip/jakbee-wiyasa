@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Entity, PolygonGraphics, Viewer} from "resium";
-import {Cartesian2, Cartesian3, Color, Math} from "cesium";
+import {Rectangle, Cartesian2, Cartesian3, Color, Math} from "cesium";
 import CSVReader from "react-csv-reader";
 import {exportObjects} from "../util/csv";
 import swal from 'sweetalert';
@@ -37,7 +37,7 @@ export class Map extends Component {
 
   componentDidMount() {
     this.viewer.scene.camera.flyTo({
-      destination : Cesium.Rectangle.fromDegrees(95.3134, 5.5508, 95.3221, 5.5563),
+      destination : Rectangle.fromDegrees(119.83743, -0.9116697, 119.85452, -0.895846),
     });
   }
 
