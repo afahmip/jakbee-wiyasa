@@ -255,7 +255,7 @@ const co = [
   // 106.71895435567745,-6.045869034716208,
 ];
 
-export class Map extends Component {
+export class FloodMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -296,25 +296,39 @@ export class Map extends Component {
     }
   }
 
+  changeWaterLevel() {
+    const { waterLevel } = this.props;
+
+    // if nil, init water level
+    if (!this.state.water) {
+      // if nil, and new water level value == 0 do nothing
+      if (waterLevel === 0) {
+        return
+      }
+
+      const water = this.viewer.entities.add({
+        name : 'Blue extruded polygon over Palu',
+        polygon : {
+          hierarchy : Cartesian3.fromDegreesArray(co),
+          extrudedHeight: waterLevel,
+          // vertexFormat allows it to warp around the globe
+          vertexFormat : EllipsoidSurfaceAppearance.VERTEX_FORMAT,
+          material : Color.BLUE.withAlpha(0.2),
+        },
+      });
+      this.setState({ water });
+
+      return
+    }
+
+    // if already init (not nil), update water level
+    this.state.water.polygon.extrudedHeight = waterLevel;
+  }
+
   componentDidMount() {
     this.viewer.scene.camera.flyTo({
-      destination : Rectangle.fromDegrees(119.83743, -0.9116697, 119.85452, -0.895846),
+      destination : Rectangle.fromDegrees(106.755150, -6.128806, 106.945889, -6.292435),
     });
-
-    // The "water" is just a blue rectangular extruded polygon!
-    const water = this.viewer.entities.add({
-      name : 'Blue extruded polygon over Palu',
-      polygon : {
-        hierarchy : Cartesian3.fromDegreesArray(co),
-        extrudedHeight: 1000,
-        // vertexFormat allows it to warp around the globe
-        vertexFormat : EllipsoidSurfaceAppearance.VERTEX_FORMAT,
-        material : Color.BLUE.withAlpha(0.2),
-      },
-    });
-    this.setState({
-      water: water
-    })
   }
 
   getLocationFromScreenXY = (x, y) => {
@@ -386,21 +400,10 @@ export class Map extends Component {
     // console.log(this.state)
     const {currentEntity, entities} = this.state
     const points = currentEntity.points || []
+    this.changeWaterLevel()
 
     return (
       <div style={{position: "relative", width: "100%", minHeight: "750px"}}>
-        <div style={{padding: "16px", position: "absolute", top: 0, left: 0, zIndex: 99, display: "flex", flexDirection: "row"}}>
-          <Button onClick={() => exportObjects(entities, "export.csv")}>Export data</Button>
-          <CSVReader
-            parserOptions={{header: true, delimiter: ";"}}
-            onFileLoaded={this.importData}
-          />
-        </div>
-        <div style={{padding: "16px", position: "absolute", bottom: 0, right: 0, zIndex: 99, display: "flex", flexDirection: "row"}}>
-          <Button onClick={() => this.saveSelection()}>
-            Save Polygon
-          </Button>
-        </div>
         <Viewer full
                 style={{position: "absolute"}}
                 ref={e => {
@@ -409,28 +412,8 @@ export class Map extends Component {
                 imageryProvider={esri}
                 terrainProvider={cesiumTerrain}
                 onClick={this.onMapClick}
-        >
-          {points.map((point, index) => {
-            return (
-              <Entity
-                key={index}
-                position={Cartesian3.fromDegrees(point[0], point[1])}
-                point={{pixelSize: 5}}
-              />
-            )
-          })}
-          {entities.map((entity, index) => {
-            const color = entity["isDamaged"] ? Color.RED.withAlpha(0.7) : Color.GREEN.withAlpha(0.7)
-            return (
-              <Entity key={"entity-" + index}>
-                <PolygonGraphics
-                  hierarchy={Cartesian3.fromDegreesArray(entity["points"])}
-                  material={color}
-                />
-              </Entity>
-            )
-          })}
-        </Viewer>
+                changeWaterLevel={this.changeWaterLevel}
+        />
       </div>
     )
   }

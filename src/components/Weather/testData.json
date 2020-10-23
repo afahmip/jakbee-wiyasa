@@ -1,0 +1,134 @@
+{
+    "list": [
+        {
+            "dt": 1603442934,
+            "temp_min": 25,
+            "temp_max": 32,
+            "humidity": 81,
+            "weather_description": "few clouds",
+            "weather_icon": "10d",
+            "cloud": 20,
+            "wind_speed": 1.7,
+            "floodLevel": 0
+        },
+        {
+            "dt": 1603529334,
+            "temp_min": 25,
+            "temp_max": 32,
+            "humidity": 81,
+            "weather_description": "few clouds",
+            "weather_icon": "10d",
+            "cloud": 20,
+            "wind_speed": 1.7,
+            "floodLevel": 0
+        },
+        {
+            "dt": 1603615734,
+            "temp_min": 25,
+            "temp_max": 32,
+            "humidity": 81,
+            "weather_description": "few clouds",
+            "weather_icon": "10d",
+            "cloud": 20,
+            "wind_speed": 1.7,
+            "floodLevel": 0
+        },
+        {
+            "dt": 1603702134,
+            "temp_min": 25,
+            "temp_max": 32,
+            "humidity": 81,
+            "weather_description": "few clouds",
+            "weather_icon": "10d",
+            "cloud": 20,
+            "wind_speed": 1.7,
+            "floodLevel": 0
+        },
+        {
+            "dt": 1603788534,
+            "temp_min": 25,
+            "temp_max": 32,
+            "humidity": 81,
+            "weather_description": "few clouds",
+            "weather_icon": "10d",
+            "cloud": 20,
+            "wind_speed": 1.7,
+            "floodLevel": 0
+        },
+        {
+            "dt": 1603635406,
+            "temp_min": 25,
+            "temp_max": 32,
+            "humidity": 81,
+            "weather_description": "few clouds",
+            "weather_icon": "10d",
+            "cloud": 20,
+            "wind_speed": 1.7,
+            "floodLevel": 0
+        },
+        {
+            "dt": 1603721806,
+            "temp_min": 25,
+            "temp_max": 32,
+            "humidity": 71,
+            "weather_description": "Scattered thunderstorms",
+            "weather_icon": "thunderstorms01",
+            "cloud": 70,
+            "wind_speed": 3.6,
+            "floodLevel": 20
+        },
+        {
+            "dt": 1603808206,
+            "temp_min": 26,
+            "temp_max": 32,
+            "humidity": 70,
+            "weather_description": "Scattered thunderstorms",
+            "weather_icon": "thunderstorms01",
+            "cloud": 40,
+            "wind_speed": 2.7,
+            "floodLevel": 20
+        },
+        {
+            "dt": 1603894606,
+            "temp_min": 27,
+            "temp_max": 31,
+            "humidity": 71,
+            "weather_description": "Scattered thunderstorms",
+            "weather_icon": "thunderstorms01",
+            "cloud": 50,
+            "wind_speed": 3.61,
+            "floodLevel": 40
+        },
+        {
+            "dt": 1603981006,
+            "temp_min": 26,
+            "temp_max": 32,
+            "humidity": 69,
+            "weather_description": "Scattered thunderstorms",
+            "weather_icon": "thunderstorms01",
+            "cloud": 40,
+            "wind_speed": 3.61,
+            "floodLevel": 30
+        },
+        {
+            "dt": 1604067406 ,
+            "temp_min": 24,
+            "temp_max": 30,
+            "humidity": 70,
+            "weather_description": "Scattered thunderstorms",
+            "weather_icon": "thunderstorms01",
+            "cloud": 40,
+            "wind_speed": 3.88,
+            "floodLevel": 20
+        }
+    ],
+    "city": {
+        "id": 2643743,
+        "name": "London",
+        "coord": {
+            "lat": 51.5085,
+            "lon": -0.1258
+        },
+        "country": "GB"
+    }
+}

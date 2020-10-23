@@ -2,11 +2,25 @@ import React from "react";
 import { Row, Col } from "shards-react";
 
 import PageTitle from "../../components/PageTitle";
-import {Map} from "../../components/Map";
+import {FloodMap} from "../../components/FloodMap";
 import Weather from "../../components/Weather";
 import "./style.css";
 
-class Overview extends React.Component {
+class FloodOverview extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      waterLevel: 0,
+    }
+  }
+
+  changeWaterLevel = (newWaterLevel) => {
+    this.setState({
+      waterLevel: newWaterLevel,
+    })
+  }
+
   render() {
     return (
       <>
@@ -19,11 +33,14 @@ class Overview extends React.Component {
         </Row>
 
         <Row>
-          <Map />
+          <div className="weather-container">
+            <Weather changeWaterLevel={this.changeWaterLevel}/>
+          </div>
+          <FloodMap waterLevel={this.state.waterLevel}/>
         </Row>
       </>
     )
   }
 }
 
-export default Overview;
+export default FloodOverview;

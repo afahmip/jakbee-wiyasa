@@ -11,6 +11,11 @@ class SidebarNavItems extends React.Component {
         to: "/",
       },
       {
+        title: "Flood Prediction",
+        icon: 'dashboard',
+        to: "/flood",
+      },
+      {
         title: "Example 1",
         icon: 'credit_card',
         to: "/payments",
