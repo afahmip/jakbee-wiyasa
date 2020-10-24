@@ -6,24 +6,12 @@ class SidebarNavItems extends React.Component {
   state = {
     navItems: [
       {
-        title: "Overview",
-        icon: 'dashboard',
+        title: "Damage Assessment",
         to: "/",
       },
       {
         title: "Flood Prediction",
-        icon: 'dashboard',
         to: "/flood",
-      },
-      {
-        title: "Example 1",
-        icon: 'credit_card',
-        to: "/payments",
-      },
-      {
-        title: "Example 2",
-        icon: 'line_style',
-        to: "/example"
       }
     ]
   };

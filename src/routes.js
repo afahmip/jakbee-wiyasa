@@ -19,15 +19,5 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: FloodOverview,
-  },
-  {
-    path: "/payments",
-    layout: DefaultLayout,
-    component: ExampleData,
-  },
-  {
-    path: '/example',
-    layout: DefaultLayout,
-    component: ExamplePosts,
-  },
+  }
 ];
